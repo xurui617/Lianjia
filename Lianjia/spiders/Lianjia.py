@@ -9,12 +9,27 @@ class MySpider(scrapy.Spider):
     start_url = 'https://sz.lianjia.com/ershoufang/'
 
     def start_requests(self):
-        response = Request(self.start_url)
+        yield Request(self.start_url, self.get_district)
+
+    def get_district(self, response):
         # /ershoufang/luohuqu/
         district = response.xpath('//div[@data-role="ershoufang"]//a//@href').extract()
         for url in district:
             district_url = self.base_url + url
-            yield Request(district_url, self.parse)
+            print("=============", district_url)
+            yield Request(district_url, self.get_urls)
+
+    def get_urls(self, response):
+        print("*********************")
+        urls = response.xpath('//ul[@class="sellListContent"]//li//div[@class="title"]//a//@href').extract()
+        for url in urls:
+            yield Request(url, self.get_info)
+
+    def get_info(self, response):
+        print("++++++++++++++++")
+
+        pass
+
 
 
 
