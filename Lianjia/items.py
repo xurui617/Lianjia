@@ -39,5 +39,8 @@ class LianjiaItem(scrapy.Item):
     房屋年限 = scrapy.Field()
     产权所属 = scrapy.Field()
     抵押信息 = scrapy.Field()
+    房本备件 = scrapy.Field()
+    房协编码 = scrapy.Field()
+    有效期限 = scrapy.Field()
 
     pass
